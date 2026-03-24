@@ -1,6 +1,7 @@
 import streamlit as st
 import joblib
 import numpy as np
+import pandas as pd
 
 # සේව් කරපු Model එකයි Scaler එකයි ලෝඩ් කරගනිමු
 scaler = joblib.load('scaler.pkl')
@@ -17,14 +18,21 @@ rice_price = st.slider("Rice Price (සහල් මිල - රු.)", min_valu
 
 # Predict Button එක එබුවම වෙන දේ
 if st.button("Predict Crisis / අනාවැකිය කියන්න"):
-    # User දුන්න දත්ත ටික එකතු කිරීම
-    user_data = np.array([[usd_rate, diesel_price, lorry_quota, rice_price]])
 
-    # දත්ත ටික Scaling කිරීම (Model එක Train කරපු විදියටම)
+    # 🔴 වෙනස් කළ කොටස: Numpy array වෙනුවට Pandas DataFrame එකක් හදමු (Column නම් එක්කම)
+    user_data = pd.DataFrame(
+        [[usd_rate, diesel_price, lorry_quota, rice_price]],
+        columns=['USD_Rate', 'Diesel_Price_Rs', 'Lorry_Quota_L', 'Rice_Price_Rs']
+    )
+
+    # දත්ත ටික Scaling කිරීම
     scaled_data = scaler.transform(user_data)
 
     # අනාවැකිය (Prediction) ගැනීම
     prediction = model.predict(scaled_data)
+
+    # (අවශ්‍ය නම් මේ පේළියෙන් ඇත්තටම එන උත්තරේ මොකක්ද කියලා App එකේ බලාගන්න පුළුවන්)
+    # st.write(f"Raw Model Output: {prediction[0]}")
 
     st.markdown("---")
     if prediction[0] == 1:
