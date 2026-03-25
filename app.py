@@ -174,7 +174,8 @@ st.markdown(
     """
     <div class="footer">
         Engineered by <strong>Dhanushka Rathnayaka</strong> | 
-        <a href="http://dhanushka.live/" target="_blank">View Portfolio</a>
+        <a href="http://dhanushka.live/" target="_blank">View Portfolio</a><br><br>
+        <small>Note: This AI-based output may contain errors. This project is created for educational purposes only.</small>
     </div>
     """,
     unsafe_allow_html=True
